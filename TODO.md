@@ -1,11 +1,12 @@
 ## Prepare
 
 - [x] Create Rails 6 App
-- [ ] Setup and run Rubocop
+- [x] Setup and run Rubocop
 
 
 ## Simplest working solution
 
+- [x] Setup Headless Chrome with first, simple system test
 - [ ] Add postcode_io gem
 - [ ] Implement basic postcode lookup no error checking happy path
 - [ ] Allow "Southwark" and "Lambeth" to allowed LSOA list
