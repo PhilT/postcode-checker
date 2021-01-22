@@ -24,4 +24,11 @@ class PostcodeTest < ActiveSupport::TestCase
     postcode = Postcode.new(code: 'RG42 1AA')
     assert_not postcode.allowed?
   end
+
+  test 'allowed? returns true when postcode is in whitelist' do
+    stub_request(:any, /api.postcodes.io/).to_raise('Not expecting to call API')
+
+    postcode = Postcode.new(code: 'SH24 1AA')
+    assert postcode.allowed?
+  end
 end
