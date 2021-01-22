@@ -15,7 +15,10 @@ class PostcodeCheckerTest < ActionDispatch::IntegrationTest
     get '/postcodes', params: { code: 'SE1 7QD' }
 
     assert_response :success
-    assert_select 'p', html: '<strong>ALLOWED</strong>: Postcode SE1 7QD is within our service area.'
+    assert_select(
+      'p',
+      html: '<strong>ALLOWED</strong>: Postcode SE1 7QD is within our service area.'
+    )
   end
 
   test 'lookup an unservable postcode' do
@@ -25,6 +28,9 @@ class PostcodeCheckerTest < ActionDispatch::IntegrationTest
     get '/postcodes', params: { code: 'RG42 1AA' }
 
     assert_response :success
-    assert_select 'p', html: '<strong>NOT ALLOWED</strong>: Postcode RG42 1AA is outside our service area.'
+    assert_select(
+      'p',
+      html: '<strong>NOT ALLOWED</strong>: Postcode RG42 1AA is outside our service area.'
+    )
   end
 end

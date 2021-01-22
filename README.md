@@ -14,5 +14,5 @@
 ### Run tests
 
     rails test          # Unit (models, helpers) and integration tests (stubs web calls)
-    rails test:system   # Run end to end tests (uses real postcodes.io lookup)
+    rails test:system   # Run end to end tests (uses real postcodes.io lookup) and Rubocop
     rails test:all      # Run both the above

@@ -17,15 +17,15 @@ gem 'webpacker', '~> 5.0'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rubocop', '~> 1.8', require: false
+  gem 'rubocop-minitest', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
 end
 
 group :development do
   gem 'listen', '~> 3.3'
   gem 'rack-mini-profiler', '~> 2.0' # see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
-  gem 'rubocop', '~> 1.8'
-  gem 'rubocop-minitest'
-  gem 'rubocop-performance'
-  gem 'rubocop-rails'
   gem 'spring'
   gem 'web-console', '>= 4.1.0'
 end

@@ -28,7 +28,8 @@
 - [ ] Add root redirect to /postcodes
 - [ ] Remove unused gems
 
-## Suggestions for future improvements
+## Suggestions/Questions for future improvements
 
-- Database based whitelist could be edited without server downtime or developer effort
-
+- A whitelist could be changed without server downtime or developer effort,
+  depending on how often it changes and in what way (e.g. big list or single/few additions)
+- I'd also ask whether the servable areas would change as these are currently hardcoded

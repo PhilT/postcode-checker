@@ -10,6 +10,5 @@ module PostcodesHelper
                         ['NOT ALLOWED', 'outside']
                       end
     "<strong>#{allowed}</strong>: Postcode #{code} is #{within} our service area.".html_safe
-
   end
 end
