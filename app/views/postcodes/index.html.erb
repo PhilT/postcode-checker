@@ -1,0 +1,8 @@
+<h1>Postcode Lookup</h1>
+<%= form_with url: '/postcodes', method: 'get' do |form| %>
+  <%= form.label :code, 'Enter Postcode:' %>
+  <%= form.text_field :code %>
+  <%= form.submit 'Check' %>
+<% end %>
+
+<p><%= PostcodesHelper.display_servable_for @code, @allowed %></p>

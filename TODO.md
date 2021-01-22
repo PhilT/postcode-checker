@@ -7,9 +7,11 @@
 ## Simplest working solution
 
 - [x] Setup Headless Chrome with first, simple system test
-- [ ] Add postcode_io gem
-- [ ] Implement basic postcode lookup no error checking happy path
-- [ ] Allow "Southwark" and "Lambeth" to allowed LSOA list
+- [x] Add postcode_io gem
+- [x] Present search form on index page
+- [x] Implement basic postcode lookup no error checking happy path
+- [x] Allow "Southwark" and "Lambeth" LSOAs
+- [x] Tiny bit of styling
 - [ ] Add whitelist for SH24 1AA and SH24 1AB
 
 
@@ -22,6 +24,8 @@
 
 ## Clean up
 
+- [ ] Pretty postcode in allow message (PostcodeHelper)
+- [ ] Add root redirect to /postcodes
 - [ ] Remove unused gems
 
 ## Suggestions for future improvements
