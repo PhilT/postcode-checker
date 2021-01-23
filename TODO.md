@@ -35,3 +35,4 @@
 - A whitelist could be changed without server downtime or developer effort,
   depending on how often it changes and in what way (e.g. complete new list or 1 or 2 additions)
 - I'd also ask whether the servable areas would change as these are currently hardcoded
+- Could show a nicer message when the postcode is invalid as opposed to just being outside the service area.

@@ -23,4 +23,12 @@ class PostcodeServiceTest < ActiveSupport::TestCase
 
     assert_not PostcodeService.allowed?('RG42 1AA')
   end
+
+  test 'allowed? returns false when LSOA does not match a postcode' do
+    invalid_postcode = 'fdsfds'
+    stub_request(:get, "https://api.postcodes.io/postcodes/#{invalid_postcode}")
+      .to_return(status: 404, body: '{"status":404,"error":"Invalid postcode"}')
+
+    assert_not PostcodeService.allowed?(invalid_postcode)
+  end
 end
