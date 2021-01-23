@@ -4,24 +4,27 @@ require 'test_helper'
 
 class PostcodeServiceTest < ActiveSupport::TestCase
   test 'allowed? returns true when LSOA matches Southwark' do
-    stub_request(:get, 'https://api.postcodes.io/postcodes/SE17QD')
+    postcode = 'SE17QD'
+    stub_request(:get, "https://api.postcodes.io/postcodes/#{postcode}")
       .to_return(status: 200, body: '{"result":{"lsoa":"Southwark 034A"}}')
 
-    assert PostcodeService.allowed?('SE1 7QD')
+    assert PostcodeService.allowed?(postcode)
   end
 
   test 'allowed? returns true when LSOA matches Lambeth' do
-    stub_request(:get, 'https://api.postcodes.io/postcodes/SE17QA')
+    postcode = 'SE17QA'
+    stub_request(:get, "https://api.postcodes.io/postcodes/#{postcode}")
       .to_return(status: 200, body: '{"result":{"lsoa":"Lambeth 036"}}')
 
-    assert PostcodeService.allowed?('SE1 7QA')
+    assert PostcodeService.allowed?(postcode)
   end
 
   test 'allowed? returns false when LSOA matches Bracknell' do
-    stub_request(:get, 'https://api.postcodes.io/postcodes/RG421AA')
+    postcode = 'RG421AA'
+    stub_request(:get, "https://api.postcodes.io/postcodes/#{postcode}")
       .to_return(status: 200, body: '{"result":{"lsoa":"Bracknell Forest 002C"}}')
 
-    assert_not PostcodeService.allowed?('RG42 1AA')
+    assert_not PostcodeService.allowed?(postcode)
   end
 
   test 'allowed? returns false when LSOA does not match a postcode' do

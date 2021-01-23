@@ -1,11 +1,17 @@
 # frozen_string_literal: true
 
-class PostcodeService
-  def self.allowed?(code)
-    service = Postcodes::IO.new
-    response = service.lookup(code)
-    return false unless response
+require 'net/http'
+require 'json'
 
-    response.lsoa =~ /^Southwark |^Lambeth /
+class PostcodeService
+  POSTCODES_IO_BASE_URI = 'https://api.postcodes.io/postcodes/'
+
+  def self.allowed?(code)
+    response = Net::HTTP.get(URI("#{POSTCODES_IO_BASE_URI}#{code}"))
+    json_response = JSON.parse(response)
+
+    return false unless json_response['error'].blank?
+
+    json_response['result']['lsoa'] =~ /^Southwark |^Lambeth /
   end
 end
