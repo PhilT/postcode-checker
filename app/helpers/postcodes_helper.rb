@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module PostcodesHelper
-  def self.display_servable_for(code, allowed)
+  def self.display_servable_for(code, servable)
     return unless code
     return 'Enter a valid postcode to check.' unless code.present?
 
-    allowed, within = if allowed
+    allowed, within = if servable
                         %w[ALLOWED within]
                       else
                         ['NOT ALLOWED', 'outside']

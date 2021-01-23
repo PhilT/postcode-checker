@@ -3,28 +3,21 @@
 require_relative '../../lib/sanitize'
 
 class Postcode
-  attr_reader :code, :allowed
+  attr_reader :code, :servable
 
-  def allowed?
+  def servable?
     return if @code.blank?
 
-    in_whitelist? || api_allows?
+    in_whitelist? || PostcodeService.allowed?(@code)
   end
 
   def initialize(attributes = {})
     @code = Sanitize.postcode attributes[:code]
-    @allowed = attributes[:allowed]
   end
 
   private
 
   def in_whitelist?
     Whitelist.new(@code).found?
-  end
-
-  def api_allows?
-    service = Postcodes::IO.new
-    response = service.lookup(@code)
-    response.lsoa =~ /^Southwark |^Lambeth /
   end
 end
