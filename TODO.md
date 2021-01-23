@@ -19,8 +19,7 @@
 ## Harden
 
 - [x] Handle invalid input
-- [ ] Handle service failures
-- [ ] Add caching
+- [x] Handle service failures
 
 
 ## Clean up
@@ -36,3 +35,6 @@
   depending on how often it changes and in what way (e.g. complete new list or 1 or 2 additions)
 - I'd also ask whether the servable areas would change as these are currently hardcoded
 - Could show a nicer message when the postcode is invalid as opposed to just being outside the service area.
+- I could add caching to make repeated lookups a little faster but would need to get details
+  on how likely repeated postcodes are to be looked up and whether postcodes.io could handle
+  the load anyway.

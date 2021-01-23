@@ -13,16 +13,16 @@ class PostcodeService
   end
 
   def allowed?
-    response = Net::HTTP.get(URI("#{POSTCODES_IO_BASE_URI}#{@code}"))
-    json_response = JSON.parse(response)
+    response = Net::HTTP.get_response(URI("#{POSTCODES_IO_BASE_URI}#{@code}"))
 
-    if json_response['error'].present?
-      @reason = :invalid
-      false
-    else
+    if response.code == '200'
+      json_response = JSON.parse(response.body)
       allowed = json_response['result']['lsoa'] =~ /^Southwark |^Lambeth /
       @reason = allowed ? :within : :outside
       allowed
+    else
+      @reason = response.code == '404' ? :invalid : :unavailable
+      false
     end
   end
 end

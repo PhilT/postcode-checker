@@ -38,10 +38,18 @@ class PostcodeCheckerTest < ActionDispatch::IntegrationTest
 
   test 'handle blank postcode submission' do
     get '/postcodes', params: { code: '' }
+
     assert_response :success
-    assert_select(
-      'p',
-      html: 'Enter a valid postcode to check.'
-    )
+    assert_select 'p', html: 'Enter a valid postcode to check.'
+  end
+
+  test 'handle service unavailable' do
+    postcode = 'SE17QD'
+    stub_request(:get, "https://api.postcodes.io/postcodes/#{postcode}")
+      .to_return(status: 503)
+    get '/postcodes', params: { code: postcode }
+
+    assert_response :success
+    assert_select 'p', html: 'The postcode service is currently unavailable. Please try later.'
   end
 end

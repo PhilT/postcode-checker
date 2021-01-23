@@ -26,4 +26,10 @@ class PostcodesHelperTest < ActiveSupport::TestCase
 
     assert_equal 'Enter a valid postcode to check.', result
   end
+
+  test 'display_servable_for returns service unavailable message' do
+    result = PostcodesHelper.display_servable_for 'SE1 7QD', :unavailable
+
+    assert_equal 'The postcode service is currently unavailable. Please try later.', result
+  end
 end

@@ -33,7 +33,7 @@ class PostcodeServiceTest < ActiveSupport::TestCase
     assert_equal :outside, subject.reason
   end
 
-  test 'responds invalid when LSOA does not match a postcode' do
+  test 'reason returns invalid when LSOA does not match a postcode' do
     invalid_postcode = 'fdsfds'
     stub_request(:get, "https://api.postcodes.io/postcodes/#{invalid_postcode}")
       .to_return(status: 404, body: '{"status":404,"error":"Invalid postcode"}')
@@ -41,5 +41,15 @@ class PostcodeServiceTest < ActiveSupport::TestCase
     subject = PostcodeService.new(invalid_postcode)
     assert_not subject.allowed?
     assert_equal :invalid, subject.reason
+  end
+
+  test 'reason returns not_available when service is unavailable' do
+    postcode = 'SE17QD'
+    stub_request(:get, "https://api.postcodes.io/postcodes/#{postcode}")
+      .to_return(status: 503)
+
+    subject = PostcodeService.new(postcode)
+    assert_not subject.allowed?
+    assert_equal :unavailable, subject.reason
   end
 end
