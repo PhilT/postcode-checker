@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../../lib/sanitize'
+
 class Postcode
   attr_reader :code, :allowed
 
@@ -8,14 +10,14 @@ class Postcode
   end
 
   def initialize(attributes = {})
-    @code = attributes[:code]
+    @code = Sanitize.postcode attributes[:code]
     @allowed = attributes[:allowed]
   end
 
   private
 
   def whitelist?
-    Whitelist.include?(@code.gsub(' ', ''))
+    Whitelist.new(@code).found?
   end
 
   def api?

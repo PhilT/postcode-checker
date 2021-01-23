@@ -17,7 +17,7 @@ class PostcodeCheckerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select(
       'p',
-      html: '<strong>ALLOWED</strong>: Postcode SE1 7QD is within our service area.'
+      html: '<strong>ALLOWED</strong>: Postcode SE17QD is within our service area.'
     )
   end
 
@@ -30,7 +30,7 @@ class PostcodeCheckerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select(
       'p',
-      html: '<strong>NOT ALLOWED</strong>: Postcode RG42 1AA is outside our service area.'
+      html: '<strong>NOT ALLOWED</strong>: Postcode RG421AA is outside our service area.'
     )
   end
 end

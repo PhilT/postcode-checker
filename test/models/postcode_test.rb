@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'test_helper'
+
 class PostcodeTest < ActiveSupport::TestCase
   test 'allowed? returns true when LSOA matches Southwark' do
     stub_request(:get, 'https://api.postcodes.io/postcodes/SE17QD')
@@ -30,5 +32,9 @@ class PostcodeTest < ActiveSupport::TestCase
 
     postcode = Postcode.new(code: 'SH24 1AA')
     assert postcode.allowed?
+  end
+
+  test 'santize postcode' do
+    assert_equal 'SH241AA', Postcode.new(code: '(SH24 1AA)').code
   end
 end

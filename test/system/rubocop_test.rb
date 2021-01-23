@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'test_helper'
-
 class RubocopTest < Minitest::Test
   def subject
     `rubocop`

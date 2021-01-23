@@ -13,7 +13,7 @@
 - [x] Allow "Southwark" and "Lambeth" LSOAs
 - [x] Tiny bit of styling
 - [x] Add whitelist for SH24 1AA and SH24 1AB
-- [ ] Handle different case postcodes
+- [x] Handle different case postcodes
 
 
 ## Harden
