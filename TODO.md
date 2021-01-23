@@ -25,7 +25,7 @@
 ## Clean up
 
 - [x] Make Whitelist and PostcodeService consistent
-- [ ] Remove attributes from Postcode.initialize
+- [x] Remove attributes from Postcode.initialize
 - [ ] Pretty postcode in allow message (PostcodeHelper)
 - [ ] Add root redirect to /postcodes
 - [x] Remove unused gems

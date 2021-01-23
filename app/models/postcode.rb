@@ -5,8 +5,8 @@ require_relative '../../lib/sanitize'
 class Postcode
   attr_reader :code
 
-  def initialize(attributes = {})
-    @code = Sanitize.postcode attributes[:code]
+  def initialize(code)
+    @code = Sanitize.postcode code
   end
 
   def lookup(providers)
