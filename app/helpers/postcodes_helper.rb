@@ -5,7 +5,7 @@ module PostcodesHelper
     "<strong>#{allowed}</strong>: Postcode #{code} is #{within} our service area.".html_safe
   end
 
-  def self.display_servable_for(code, reason)
+  def self.display_servable_for(code, status)
     return unless code
 
     {
@@ -14,6 +14,6 @@ module PostcodesHelper
       invalid: 'Enter a valid postcode to check.',
       unavailable: 'The postcode service is currently unavailable. Please try later.',
       nil => ''
-    }[reason]
+    }[status]
   end
 end

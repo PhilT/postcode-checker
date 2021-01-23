@@ -19,16 +19,14 @@ class WhitelistService
     attr_reader :whitelist
   end
 
-  attr_reader :code, :formatted, :reason
+  attr_reader :code, :formatted, :status
 
-  def initialize(code)
-    @code = Sanitize.postcode(code)
+  def initialize(sanitized_code)
+    @code = sanitized_code
   end
 
-  def found?
-    found = self.class.whitelist.include?(@code)
-    @reason = found ? :within : :outside
+  def lookup
     @formatted = self.class.whitelist[@code]
-    found
+    @status = @formatted ? :within : :outside
   end
 end

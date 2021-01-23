@@ -4,6 +4,10 @@ require 'test_helper'
 require_relative '../../lib/sanitize'
 
 class SanitizeTest < ActiveSupport::TestCase
+  test 'do not sanitize when code is nil' do
+    assert_nil Sanitize.postcode(nil)
+  end
+
   test 'santize postcode' do
     assert_equal 'SH241AA', Sanitize.postcode('SH24 1AA')
     assert_equal 'SH241AA', Sanitize.postcode('SH241AA')

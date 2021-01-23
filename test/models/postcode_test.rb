@@ -3,25 +3,46 @@
 require 'test_helper'
 
 class PostcodeTest < ActiveSupport::TestCase
-  test 'allowed? returns true when postcode is in whitelist' do
-    stub_request(:any, /api.postcodes.io/).to_raise('Not expecting to call API')
+  class ProviderReturningWithin
+    def initialize(code) = @code = code
 
-    assert Postcode.new(code: 'SH24 1AA').servable?
+    def lookup = :within
   end
 
-  test 'santize postcode' do
-    assert_equal 'SH241AA', Postcode.new(code: '(SH24 1AA)').code
+  class ProviderReturningOutside
+    def initialize(code) = @code = code
+
+    def lookup = :outside
   end
 
-  test 'allowed? does not call API when postcode is blank' do
-    stub_request(:any, /api.postcodes.io/).to_raise('Not expecting to call API')
+  class ProviderReturningInvalid
+    def initialize(code) = @code = code
 
-    assert_nil Postcode.new(code: '').servable?
+    def lookup = :invalid
   end
 
-  test 'allowed? does not call API when postcode has invalid characters' do
-    stub_request(:any, /api.postcodes.io/).to_raise('Not expecting to call API')
+  test 'sets status of last provider' do
+    subject = Postcode.new(code: '123')
+    status = subject.lookup([ProviderReturningOutside, ProviderReturningInvalid])
 
-    assert_nil Postcode.new(code: '()-=!"£$"').servable?
+    assert_equal :invalid, status
+  end
+
+  test 'calls providers until one returns within' do
+    subject = Postcode.new(code: '123')
+    status = subject.lookup([ProviderReturningWithin, ProviderReturningOutside])
+    assert_equal :within, status
+  end
+
+  test 'returns when code is nil' do
+    assert_nil Postcode.new(code: nil).lookup(nil)
+  end
+
+  test 'sets status invalid when code is empty' do
+    assert_equal :invalid, Postcode.new(code: '').lookup(nil)
+  end
+
+  test 'sets status invalid when postcode has invalid characters' do
+    assert_equal :invalid, Postcode.new(code: '()-=!"£$"').lookup(nil)
   end
 end
