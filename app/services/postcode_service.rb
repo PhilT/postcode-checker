@@ -6,12 +6,23 @@ require 'json'
 class PostcodeService
   POSTCODES_IO_BASE_URI = 'https://api.postcodes.io/postcodes/'
 
-  def self.allowed?(code)
-    response = Net::HTTP.get(URI("#{POSTCODES_IO_BASE_URI}#{code}"))
+  attr_reader :reason
+
+  def initialize(code)
+    @code = code
+  end
+
+  def allowed?
+    response = Net::HTTP.get(URI("#{POSTCODES_IO_BASE_URI}#{@code}"))
     json_response = JSON.parse(response)
 
-    return false unless json_response['error'].blank?
-
-    json_response['result']['lsoa'] =~ /^Southwark |^Lambeth /
+    if json_response['error'].present?
+      @reason = :invalid
+      false
+    else
+      allowed = json_response['result']['lsoa'] =~ /^Southwark |^Lambeth /
+      @reason = allowed ? :within : :outside
+      allowed
+    end
   end
 end

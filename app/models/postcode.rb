@@ -8,7 +8,7 @@ class Postcode
   def servable?
     return if @code.blank?
 
-    in_whitelist? || PostcodeService.allowed?(@code)
+    in_whitelist? || PostcodeService.new(@code).allowed?
   end
 
   def initialize(attributes = {})
