@@ -5,7 +5,6 @@ class PostcodesController < ApplicationController
     return unless params[:code]
 
     @postcode = Postcode.new(params[:code])
-    @code = @postcode.code
-    @status = @postcode.lookup([WhitelistService, PostcodeService])
+    @status, @code = @postcode.lookup([WhitelistService, PostcodeService])
   end
 end

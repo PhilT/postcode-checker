@@ -4,45 +4,40 @@ require 'test_helper'
 
 class PostcodeTest < ActiveSupport::TestCase
   class ProviderReturningWithin
-    def initialize(code) = @code = code
-
-    def lookup = :within
+    def self.lookup(_code) = [:within, 'formatted']
   end
 
   class ProviderReturningOutside
-    def initialize(code) = @code = code
-
-    def lookup = :outside
+    def self.lookup(_code) = [:outside, 'formatted']
   end
 
   class ProviderReturningInvalid
-    def initialize(code) = @code = code
-
-    def lookup = :invalid
+    def self.lookup(_code) = [:invalid, '']
   end
 
   test 'sets status of last provider' do
     subject = Postcode.new('123')
-    status = subject.lookup([ProviderReturningOutside, ProviderReturningInvalid])
+    result = subject.lookup([ProviderReturningOutside, ProviderReturningInvalid])
 
-    assert_equal :invalid, status
+    assert_equal [:invalid, ''], result
   end
 
   test 'calls providers until one returns within' do
     subject = Postcode.new('123')
-    status = subject.lookup([ProviderReturningWithin, ProviderReturningOutside])
-    assert_equal :within, status
+    result = subject.lookup([ProviderReturningWithin, ProviderReturningOutside])
+
+    assert_equal [:within, 'formatted'], result
   end
 
   test 'returns when code is nil' do
-    assert_nil Postcode.new(nil).lookup(nil)
+    assert_equal [nil, nil], Postcode.new(nil).lookup(nil)
   end
 
   test 'sets status invalid when code is empty' do
-    assert_equal :invalid, Postcode.new('').lookup(nil)
+    assert_equal [:invalid, ''], Postcode.new('').lookup(nil)
   end
 
   test 'sets status invalid when postcode has invalid characters' do
-    assert_equal :invalid, Postcode.new('()-=!"£$"').lookup(nil)
+    assert_equal [:invalid, ''], Postcode.new('()-=!"£$"').lookup(nil)
   end
 end

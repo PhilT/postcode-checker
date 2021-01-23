@@ -10,13 +10,14 @@ class Postcode
   end
 
   def lookup(providers)
-    return nil if @code.nil?
-    return :invalid if @code.empty?
+    return [nil, nil] if @code.nil?
+    return [:invalid, ''] if @code.empty?
 
-    providers.reduce(:outside) do |prev, provider|
-      return prev if prev == :within
+    providers.reduce([:invalid, nil]) do |prev, provider|
+      status, _formatted = prev
+      return prev if status == :within
 
-      provider.new(@code).lookup
+      provider.lookup(@code)
     end
   end
 end

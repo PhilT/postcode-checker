@@ -12,27 +12,30 @@ class PostcodeCheckerTest < ActionDispatch::IntegrationTest
 
   test 'lookup a servable postcode' do
     stub_request(:get, 'https://api.postcodes.io/postcodes/SE17QD')
-      .to_return(status: 200, body: '{"result":{"lsoa":"Southwark 034A"}}')
+      .to_return(status: 200, body: '{"result":{"lsoa":"Southwark 034A","postcode":"SE1 7QD"}}')
 
     get '/postcodes', params: { code: 'SE1 7QD' }
 
     assert_response :success
     assert_select(
       'p',
-      html: '<strong>ALLOWED</strong>: Postcode SE17QD is within our service area.'
+      html: '<strong>ALLOWED</strong>: Postcode SE1 7QD is within our service area.'
     )
   end
 
   test 'lookup an unservable postcode' do
     stub_request(:get, 'https://api.postcodes.io/postcodes/RG421AA')
-      .to_return(status: 200, body: '{"result":{"lsoa":"Bracknell Forest 002C"}}')
+      .to_return(
+        status: 200,
+        body: '{"result":{"lsoa":"Bracknell Forest 002C","postcode":"RG42 1AA"}}'
+      )
 
     get '/postcodes', params: { code: 'RG42 1AA' }
 
     assert_response :success
     assert_select(
       'p',
-      html: '<strong>NOT ALLOWED</strong>: Postcode RG421AA is outside our service area.'
+      html: '<strong>NOT ALLOWED</strong>: Postcode RG42 1AA is outside our service area.'
     )
   end
 

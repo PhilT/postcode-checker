@@ -19,14 +19,8 @@ class WhitelistService
     attr_reader :whitelist
   end
 
-  attr_reader :code, :formatted, :status
-
-  def initialize(sanitized_code)
-    @code = sanitized_code
-  end
-
-  def lookup
-    @formatted = self.class.whitelist[@code]
-    @status = @formatted ? :within : :outside
+  def self.lookup(sanitized_code)
+    formatted = whitelist[sanitized_code]
+    [formatted ? :within : :outside, formatted || sanitized_code]
   end
 end
