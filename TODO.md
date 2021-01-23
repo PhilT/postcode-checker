@@ -27,7 +27,7 @@
 - [ ] Make Whitelist and PostcodeService consistent
 - [ ] Pretty postcode in allow message (PostcodeHelper)
 - [ ] Add root redirect to /postcodes
-- [ ] Remove unused gems
+- [x] Remove unused gems
 
 ## Suggestions/Questions for future improvements
 
