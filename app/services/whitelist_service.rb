@@ -2,7 +2,7 @@
 
 require_relative '../../lib/sanitize'
 
-class Whitelist
+class WhitelistService
   def self.load
     File.read(Rails.root.join('config/whitelist.txt'))
   end
@@ -14,7 +14,7 @@ class Whitelist
       .to_h
   end
 
-  @whitelist = Whitelist.to_h Whitelist.load
+  @whitelist = WhitelistService.to_h WhitelistService.load
   class << self
     attr_reader :whitelist
   end

@@ -19,7 +19,7 @@ class Postcode
   private
 
   def whitelist_lookup
-    whitelist = Whitelist.new(@code)
+    whitelist = WhitelistService.new(@code)
     found = whitelist.found?
     @reason = whitelist.reason
     found
