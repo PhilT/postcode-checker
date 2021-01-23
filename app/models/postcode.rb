@@ -6,7 +6,9 @@ class Postcode
   attr_reader :code, :allowed
 
   def allowed?
-    whitelist? || api?
+    return if @code.blank?
+
+    in_whitelist? || api_allows?
   end
 
   def initialize(attributes = {})
@@ -16,11 +18,11 @@ class Postcode
 
   private
 
-  def whitelist?
+  def in_whitelist?
     Whitelist.new(@code).found?
   end
 
-  def api?
+  def api_allows?
     service = Postcodes::IO.new
     response = service.lookup(@code)
     response.lsoa =~ /^Southwark |^Lambeth /

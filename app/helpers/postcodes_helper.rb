@@ -3,6 +3,7 @@
 module PostcodesHelper
   def self.display_servable_for(code, allowed)
     return unless code
+    return 'Enter a valid postcode to check.' unless code.present?
 
     allowed, within = if allowed
                         %w[ALLOWED within]

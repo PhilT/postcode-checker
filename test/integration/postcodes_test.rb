@@ -5,7 +5,9 @@ require 'test_helper'
 class PostcodeCheckerTest < ActionDispatch::IntegrationTest
   test 'can see postcodes form' do
     get '/postcodes'
+
     assert_select 'h1', 'Postcode Lookup'
+    assert_select 'p', ''
   end
 
   test 'lookup a servable postcode' do
@@ -31,6 +33,15 @@ class PostcodeCheckerTest < ActionDispatch::IntegrationTest
     assert_select(
       'p',
       html: '<strong>NOT ALLOWED</strong>: Postcode RG421AA is outside our service area.'
+    )
+  end
+
+  test 'handle blank postcode submission' do
+    get '/postcodes', params: { code: '' }
+    assert_response :success
+    assert_select(
+      'p',
+      html: 'Enter a valid postcode to check.'
     )
   end
 end

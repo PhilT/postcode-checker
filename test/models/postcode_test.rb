@@ -37,4 +37,18 @@ class PostcodeTest < ActiveSupport::TestCase
   test 'santize postcode' do
     assert_equal 'SH241AA', Postcode.new(code: '(SH24 1AA)').code
   end
+
+  test 'allowed? does not call API when postcode is blank' do
+    stub_request(:any, /api.postcodes.io/).to_raise('Not expecting to call API')
+
+    postcode = Postcode.new(code: '')
+    assert_nil postcode.allowed?
+  end
+
+  test 'allowed? does not call API when postcode has invalid characters' do
+    stub_request(:any, /api.postcodes.io/).to_raise('Not expecting to call API')
+
+    postcode = Postcode.new(code: '()-=!"£$"')
+    assert_nil postcode.allowed?
+  end
 end
