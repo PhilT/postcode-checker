@@ -3,12 +3,13 @@
 require_relative '../../lib/sanitize'
 
 class Postcode
-  attr_reader :code, :servable
+  attr_reader :code, :servable, :reason
 
   def servable?
-    return if @code.blank?
+    return if @code.nil?
+    @reason = :invalid and return if @code.empty?
 
-    in_whitelist? || PostcodeService.new(@code).allowed?
+    whitelist_lookup || api_lookup
   end
 
   def initialize(attributes = {})
@@ -17,7 +18,17 @@ class Postcode
 
   private
 
-  def in_whitelist?
-    Whitelist.new(@code).found?
+  def whitelist_lookup
+    whitelist = Whitelist.new(@code)
+    found = whitelist.found?
+    @reason = whitelist.reason
+    found
+  end
+
+  def api_lookup
+    service = PostcodeService.new(@code)
+    allowed = service.allowed?
+    @reason = service.reason
+    allowed
   end
 end

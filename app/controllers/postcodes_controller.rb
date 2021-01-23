@@ -7,5 +7,6 @@ class PostcodesController < ApplicationController
     @postcode = Postcode.new(code: params[:code])
     @code = @postcode.code
     @servable = @postcode.servable?
+    @reason = @postcode.reason
   end
 end

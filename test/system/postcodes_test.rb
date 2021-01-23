@@ -10,7 +10,7 @@ class PostcodesTest < ApplicationSystemTestCase
     fill_in 'Enter Postcode', with: 'SE1fsdfkj'
     click_on 'Check'
 
-    assert_selector 'p', text: 'NOT ALLOWED'
+    assert_selector 'p', text: 'Enter a valid postcode to check'
 
     # Then enters correct valid postcode
     fill_in 'Enter Postcode', with: 'SE1 7QD'

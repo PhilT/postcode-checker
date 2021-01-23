@@ -19,6 +19,7 @@ class WhitelistTest < ActiveSupport::TestCase
 
   test 'returns formatted postcode' do
     subject = Whitelist.new('sh24 1aa')
+    subject.found?
     assert_equal 'SH24 1AA', subject.formatted
   end
 end
