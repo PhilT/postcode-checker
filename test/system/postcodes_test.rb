@@ -12,6 +12,11 @@ class PostcodesTest < ApplicationSystemTestCase
 
     assert_selector 'p', text: 'Enter a valid postcode to check'
 
+    # Clears the form
+    click_on 'Clear'
+
+    assert_no_text 'Enter a valid postcode to check'
+
     # Then enters correct valid postcode
     fill_in 'Enter Postcode', with: 'SE1 7QD'
     click_on 'Check'
