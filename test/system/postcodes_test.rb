@@ -4,7 +4,7 @@ require 'application_system_test_case'
 
 class PostcodesTest < ApplicationSystemTestCase
   test 'Looking up a postcode' do
-    visit postcodes_url
+    visit '/'
 
     # Firstly, slips on the keyboard
     fill_in 'Enter Postcode', with: 'SE1fsdfkj'
