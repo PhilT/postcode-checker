@@ -2,7 +2,7 @@
 
 ## Development
 
-Tested on Ubuntu 20.04
+Tested on Ubuntu 20.04, using Rails 6.1.1 and Ruby 3.
 
 For system tests, headless chrome install is required. If not installed do:
 
