@@ -29,4 +29,5 @@
 - [x] Pretty postcode in allow message (PostcodeHelper)
 - [x] Add root redirect to /postcodes
 - [x] Remove unused gems
+- [x] Add clear button just to easily see any error messages reappear
 
